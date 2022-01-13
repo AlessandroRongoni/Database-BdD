@@ -25,6 +25,10 @@ CREATE TABLE Cliente_Online (
     Password       STRING      NOT NULL
 );
 
+CREATE TABLE prova_commit (
+     nome STRING (10) PRIMARY KEY,
+);
+
 
 
 

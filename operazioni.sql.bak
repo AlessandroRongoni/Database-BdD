@@ -1,6 +1,6 @@
 /*Operazione 1: inserimento nuovo Cliente Carta Passione Cinema*/		
-INSERT INTO CliCPC(CodiceFiscale,Nome,Cognome,DataNascita,Telefono,Sesso,Nazionalità,
-					NumeroCarta,Città,CAP,Via,NumeroCivico)
+INSERT INTO CliCPC(CodiceFiscale,Nome,Cognome,DataNascita,Telefono,Sesso,Nazionalita,
+					NumeroCarta,Citta,CAP,Via,NumeroCivico)
 			VALUES(...);
 
 
@@ -10,7 +10,7 @@ INSERT INTO CliOnline(CodiceFiscale,Nome,Cognome,DataNascita,Telefono,Email,Pass
 			VALUES(...);
 
 /*Operazione 3: inserimento nuovo Film*/
-/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO Film(Codice, Titolo,Anno,Durata,Valutazione)
 			VALUES(...);
 
@@ -21,7 +21,7 @@ INSERT INTO Partecip(Film,Persona,Ruolo)
 			VALUES(...);
 			
 /*Operazione 4: inserimento nuovo Prodotto Bar*/
-/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO Prodotto(ID,Nome,Prezzo)
 			VALUES(...);
 					 
@@ -32,31 +32,31 @@ INSERT INTO Prodotto(ID,Nome,Prezzo)
 INSERT INTO Compos(Composto,Componente,Quantita)
 			VALUES(...);
 /*Operazione 6: inserimento nuovo Orario*/
-/*Numero deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*Numero deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO Orario(Numero,OraInizio,OraFine)
 			VALUES(...);
 				   
 /*Operazione 7: inserimento nuovo Tariffa dei Biglietti*/
-/*Codice deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*Codice deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO Tariffario(Codice,Descrizione,Prezzo)
 			VALUES(...);
 					   
 /*Operazione 8: inserimento nuovo Acquisto Biglietto Fisico*/
-/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO AcqFisico(ID,CostoTotale,Film,DataProiez,Orario,Cliente,Pagamento)
 			VALUES(...);
 
 INSERT INTO SceltaFisica(AcqFisico,Sala,Fila,Posto,Tariffa)
 			VALUES(...);
 /*Operazione 9: inserimento nuovo Acquisto Biglietto Online*/
-/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO AcqOnline(ID,CostoTotale,Film,DataAcq,DataProiez,Orario,Cliente)
 			VALUES(...);
 
 INSERT INTO SceltaOnline(AcqOnline,Sala,Fila,Posto,Tariffa)
 			VALUES(...);	  
 /*Operazione 10: inserimento nuovo Acquisto Bar*/
-/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*ID deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO AcqBar(ID,Data,Ora,CostoTotale,Cliente)
 			VALUES(...);
 
@@ -66,7 +66,7 @@ INSERT INTO Contenere(AcqBar,Prodotto,Quantita)
 /*Operazione 12: inserimento nuovo Regista*/
 /*Dato il collasso verso l'alto della generalizzazione persona, le due operazioni,
 prima divise si uniscono in una sola: Inserimento nuova Persona*/
-/*Codice deve essere NULL in quanto tramite l'auto-increment esso si autoincrementerà*/
+/*Codice deve essere NULL in quanto tramite l'auto-increment esso si autoincrementera*/
 INSERT INTO Persona(Codice,nome,Cognome,DataNascita)
 			VALUES(...);
 
@@ -96,7 +96,7 @@ WHERE ID=<id>;
 /*Operazione 17: modifica di un Menu Convenienza*/
 UPDATE Prodotto SET Nome=<nome>, Prezzo=<prezzo>
 WHERE ID=<id>;
-/*Se si vuole cambiare nome o il prezzo del menù*/
+/*Se si vuole cambiare nome o il prezzo del menu*/
 
 UPDATE Compos SET Componente=<id-prodotto>, Quantita=<quantita>
 WHERE Compos.Composto=<id-prodotto>;
@@ -242,8 +242,8 @@ GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti
 /*Operazione 45: visualizzazione Sala piu utilizzata nell'ultimo mese*/ DA RIMUOVERE
 
 
-/*Operazione 46: visualizzazione Clienti Card Passione Cinema con più acquisti per età*/ 
-SELECT TOP 10 COUNT(*) AS Acquisti, DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766 AS Età
+/*Operazione 46: visualizzazione Clienti Card Passione Cinema con piu acquisti per eta*/ 
+SELECT TOP 10 COUNT(*) AS Acquisti, DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766 AS Eta
 FROM CliCPC,AcqFisico
 WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
 GROUP BY DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766

@@ -143,7 +143,22 @@ SELECT * FROM CliOnline WHERE CodiceFiscale=<codicefiscale>;
 /*Operazione 30: consultazione dati Orario*/
 SELECT * FROM Orario;
 
-/*Operazione 31: consultazione Posti Disponibili*/
+/*Operazione 31: consultazione Posti Disponibili di una sala*/
+SELECT SceltaFisica.Posto,SceltaFisica.Fila,
+FROM SceltaFisica,(SELECT AcqFisico.ID AS ID 
+					FROM AcqFisico
+					WHERE AcqFisico.DataProiez= <Datad> AND AcqFisico.Orario=<numero>)Tab
+WHERE SceltaFisica.Sala=<Sala> AND Tab.ID=SceltaFisica.AcqFisico
+/*Per gli acquisti fisici*/
+
+SELECT SceltaOnline.Posto,SceltaOnline.Fila,
+FROM SceltaOnline,(SELECT AcqOnline.ID AS ID 
+					FROM AcqOnline
+					WHERE AcqOnline.DataProiez= <Datad> AND AcqOnline.Orario=<numero>)Tab
+WHERE SceltaOnline.Sala=<Sala> AND Tab.ID=SceltaOnline.AcqOnline
+/*Per gli acquisti Online*/
+
+
 /*Operazione 32: consultazione Costo Totale Acquisto Biglietto Fisico*/
 SELECT CostoTotale FROM AcqFisico WHERE ID=<id>;
 
@@ -193,20 +208,68 @@ FROM CliOnline,AcqOnline, (SELECT COUNT(*) AS Acquisti, Cliente FROM AcqOnline G
 WHERE CliOnline.CodiceFiscale=AcqOnline.Cliente AND AcqOnline.Cliente=Tab.Cliente AND Tab.Acquisti=0;
 
 /*Operazione 42: visualizzazione Sala con piu acquisti nell'ultimo anno*/
-SELECT COUNT(*) AS Acquisti, CliCPC.CodiceFiscale AS CodiceFiscale, CliCPC.Nome AS Nome, CliCPC.Cognome AS Cognome 
-FROM AcqFisico,CliCPC
-WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
-GROUP BY AcqFisico.Cliente ORDER BY Acquisti
+SELECT TOP 1 COUNT(SceltaFisica.Posto) AS Acquisti, SceltaFisica.Sala 
+FROM SceltaFisica,AcqFisico 
+GROUP BY SceltaFisica.Sala 
+WHERE YEAR(AcqFisico.DataProiez)= <Anno>)
+/*Per gli acquisti fisici*/
+
+SELECT TOP 1 COUNT(SceltaOnline.Posto) AS Acquisti, SceltaOnline.Sala 
+FROM SceltaOnline,AcqOnline 
+GROUP BY SceltaOnline.Sala 
+WHERE YEAR(AcqOnline.DataProiez)= <Anno>)
+/*Per gli acquisti Online*/
 
 /*Operazione 43: visualizzazione Tipologia di Biglietti piu acquistati*/
+SELECT TOP 5 COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
+FROM SceltaFisica,Tariffario
+WHERE Tariffario.Codice=SceltaFisica.Tariffa
+GROUP BY SceltaFisica.Tariffa ORDER BY Acquisti
+/*Per gli acquisti fisici*/
 
-/*Operazione 44: visualizzazione Generi film piu visti*/
+SELECT TOP 5 COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
+FROM SceltaOnline,Tariffario
+WHERE Tariffario.Codice=SceltaOnline.Tariffa
+GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti
+/*Per gli acquisti Online*/
+
+
+/*Operazione 44: visualizzazione Generi film piu visti*/ RIMUOVI
+
 /*Operazione 45: visualizzazione Sala piu utilizzata nell'ultimo mese*/
+
 /*Operazione 46: visualizzazione Acquisti Clienti Card Passione Cinema per fascia d'eta*/
+
 /*Operazione 47: visualizzazione numero Acquisti Bar per fascia oraria*/
+
+
+
 /*Operazione 48: visualizzazione incassi Bar mensili*/
+SELECT SUM(CostoTotale) AS IncassiBarMensili
+FROM AcqBar
+WHERE YEAR(Data)= <Anno> AND MONTH(DataProiez)= <Mese>
+
 /*Operazione 49: visualizzazione incassi Acquisti Fisici di un determinato Film*/
+SELECT SUM(CostoTotale) AS IncassiFilm
+FROM AcqFisico
+WHERE Film= <Titolo>
+
 /*Operazione 50: visualizzazione incassi Acquisti Online di un determinato Film*/
+SELECT SUM(CostoTotale) AS IncassiFilm
+FROM AcqOnline
+WHERE Film= <Titolo>
+
 /*Operazione 51: visualizzazione incassi Acquisti Biglietti Fisici annuali*/
+SELECT SUM(CostoTotale) AS IncassiFisiciAnnuali
+FROM AcqFisico
+WHERE YEAR(DataProiez)= <Anno>
+
 /*Operazione 52: visualizzazione incassi Acquisti Fisici Clienti Carta Passione Cinema annuali*/
+SELECT SUM(CostoTotale) AS IncassiClientiCPCAnnuali
+FROM AcqFisico
+WHERE YEAR(DataProiez)= <Anno> AND Cliente NOT NULL
+
 /*Operazione 53: visualizzazione incassi Acquisti Online annuali*/
+SELECT SUM(CostoTotale) AS IncassiOnlineAnnuali
+FROM AcqOnline
+WHERE YEAR(DataProiez)= <Anno>

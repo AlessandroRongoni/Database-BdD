@@ -70,6 +70,9 @@ prima divise si uniscono in una sola: Inserimento nuova Persona*/
 INSERT INTO Persona(Codice,nome,Cognome,DataNascita)
 			VALUES(...);
 
+/*Operazione : Inserimento Programmazione film in sala*/ DA AGGIUNGERE
+INSERT INTO Program(Film,Sala,DataInizio,DataFine)
+			VALUES(...);
 
 /*Operazione 13: modifica dati Cliente Card Passione Cinema */
 UPDATE CliCPC SET Nome=<nome>, Cognome=<cognome>, DataNascita=<datanascita>,
@@ -234,13 +237,28 @@ GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti
 /*Per gli acquisti Online*/
 
 
-/*Operazione 44: visualizzazione Generi film piu visti*/ RIMUOVI
+/*Operazione 44: visualizzazione Generi film piu visti*/ DA RIMUOVERE
 
-/*Operazione 45: visualizzazione Sala piu utilizzata nell'ultimo mese*/
+/*Operazione 45: visualizzazione Sala piu utilizzata nell'ultimo mese*/ DA RIMUOVERE
 
-/*Operazione 46: visualizzazione Acquisti Clienti Card Passione Cinema per fascia d'eta*/
 
-/*Operazione 47: visualizzazione numero Acquisti Bar per fascia oraria*/
+/*Operazione 46: visualizzazione Clienti Card Passione Cinema con più acquisti per età*/ 
+SELECT TOP 10 COUNT(*) AS Acquisti, DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766 AS Età
+FROM CliCPC,AcqFisico
+WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
+GROUP BY DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766
+
+/*Operazione 47: visualizzazione numero Acquisti Fisici per orario*/ DA AGGIUNGERE
+SELECT COUNT(*) AS Acquisti, Orario.OraInizio AS Orario
+FROM Orario,AcqFisico 
+WHERE AcqFisico.Orario=Orario.Numero
+GROUP By Orario.Numero
+
+/*Operazione 47: visualizzazione numero Acquisti Online per orario*/ DA MODIFICARE
+SELECT COUNT(*) AS Acquisti, Orario.OraInizio AS Orario
+FROM Orario,AcqOnline 
+WHERE AcqOnline.Orario=Orario.Numero
+GROUP By Orario.Numero
 
 
 

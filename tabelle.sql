@@ -136,5 +136,63 @@ CREATE TABLE Appart (
     Genere STRING REFERENCES Genere (Genere) 
 );
 
+/*Creazione tabella Partecipazione*/
+CREATE TABLE Partecip (
+    Film    STRING REFERENCES Film (Codice) 
+                   NOT NULL,
+    Persona STRING REFERENCES Persona (Codice) 
+                   NOT NULL,
+    Ruolo   STRING NOT NULL
+);
+
+/*Creazione tabella Programmazione*/
+CREATE TABLE Program (
+    Film       STRING REFERENCES Film (Codice) 
+                      NOT NULL,
+    Sala       STRING REFERENCES Sala (Numero) 
+                      NOT NULL,
+    DataInizio DATE   NOT NULL,
+    DataFine   DATE   NOT NULL
+);
+
+/*Creazione tabella Scelta Fisica*/
+CREATE TABLE SceltaFisica (
+    AcqFisico INTEGER REFERENCES AcqFisico (ID) 
+                      NOT NULL,
+    Sala      INTEGER REFERENCES Sala (Numero) 
+                      NOT NULL,
+    Fila      CHAR    REFERENCES Posto (Fila) 
+                      NOT NULL,
+    Posto     INTEGER REFERENCES Posto (Numero) 
+                      NOT NULL,
+    Tariffa   INTEGER REFERENCES Tariffario (Codice) 
+                      NOT NULL
+);
+
+/*Creazione tabella Contenere*/
+CREATE TABLE Contenere (
+    AcqBar   INTEGER NOT NULL
+                     REFERENCES AcqBar (ID),
+    Prodotto INTEGER REFERENCES Prodotto (ID) 
+                     NOT NULL,
+    Quantita INTEGER NOT NULL
+);
+
+/*Creazione tabella Composto*/
+CREATE TABLE Compos (
+    Composto   INTEGER REFERENCES Prodotto (ID) 
+                       NOT NULL,
+    Componente INTEGER REFERENCES Prodotto (ID) 
+                       NOT NULL,
+    Quantita   INTEGER NOT NULL
+);
+
+
+
+
+
+
+
+
 
 

@@ -29,7 +29,7 @@ CREATE TABLE CliOnline (
 
 /*Creazione tabella Acquisto Bar*/
 CREATE TABLE AcqBar (
-    ID          INTEGER     PRIMARY KEY,
+    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
     Data        DATE        NOT NULL,
     Ora         TIME        NOT NULL,
     CostoTotale DECIMAL     NOT NULL,
@@ -39,10 +39,11 @@ CREATE TABLE AcqBar (
 
 /*Creazione tabella Prodotto*/
 CREATE TABLE Prodotto (
-    ID     INTEGER PRIMARY KEY,
+    ID     INTEGER PRIMARY KEY AUTOINCREMENT,
     Nome   STRING  NOT NULL,
     Prezzo DECIMAL NOT NULL
 );
+
 
 /*Creazione tabella Genere*/
 CREATE TABLE Genere (
@@ -51,7 +52,7 @@ CREATE TABLE Genere (
 
 /*Creazione tabella Film*/
 CREATE TABLE Film (
-    Codice      INTEGER PRIMARY KEY,
+    Codice      INTEGER PRIMARY KEY AUTOINCREMENT,
     Titolo      STRING  NOT NULL,
     Anno        STRING  NOT NULL,
     Durata      INTEGER NOT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE Film (
 
 /*Creazione tabella Persona*/
 CREATE TABLE Persona (
-    Codice      INTEGER     PRIMARY KEY,
+    Codice      INTEGER     PRIMARY KEY AUTOINCREMENT,
     Nome        STRING (20) NOT NULL,
     Cognome     STRING (20) NOT NULL,
     Ruolo       STRING      NOT NULL,
@@ -89,21 +90,21 @@ CREATE TABLE Posto (
 
 /*Creazione tabella Tariffario*/
 CREATE TABLE Tariffario (
-    Codice      STRING  PRIMARY KEY,
+    Codice      INTEGER PRIMARY KEY AUTOINCREMENT,
     Descrizione STRING  NOT NULL,
     Prezzo      DECIMAL NOT NULL
 );
 
 /*Creazione tabella Orario*/
 CREATE TABLE Orario (
-    Numero    INTEGER PRIMARY KEY,
+    Numero    INTEGER PRIMARY KEY AUTOINCREMENT,
     OraInizio TIME    NOT NULL,
     OraFine   TIME    NOT NULL
 );
 
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
-    ID          INTEGER     PRIMARY KEY,
+    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
     CostoTotale DECIMAL     NOT NULL,
     Film        STRING      NOT NULL,
     DataAcq     DATE        NOT NULL,

@@ -98,7 +98,7 @@ CREATE TABLE Film (
 
 /*Creazione tabella Appartenenza*/
 CREATE TABLE Appart (
-    Film   STRING PRIMARY KEY,
+    Film   STRING REFERENCES Film (Codice),
     Genere STRING REFERENCES Genere (Genere) 
 );
 

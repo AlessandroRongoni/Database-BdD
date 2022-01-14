@@ -49,7 +49,7 @@ CREATE TABLE Genere (
     Genere STRING PRIMARY KEY
 );
 
-/*Creazione tabella Fim*/
+/*Creazione tabella Film*/
 CREATE TABLE Film (
     Codice      INTEGER PRIMARY KEY,
     Titolo      STRING  NOT NULL,

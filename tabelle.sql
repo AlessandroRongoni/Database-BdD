@@ -1,4 +1,4 @@
-/*Entità*/
+/*Entita'*/
 
 /*Creazione tabella Cliente Carta Passione Cinema*/
 CREATE TABLE CliCPC (

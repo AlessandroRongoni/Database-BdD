@@ -146,7 +146,7 @@ SELECT * FROM CliOnline WHERE CodiceFiscale=<codicefiscale>;
 /*Operazione 31: consultazione dati Orario*/
 SELECT * FROM Orario;
 
-/*Operazione 32: consultazione Posti Disponibili di una sala*/
+/*Operazione 32: consultazione Posti Non Disponibili di una sala*/
 SELECT SceltaFisica.Posto,SceltaFisica.Fila,
 FROM SceltaFisica,(SELECT AcqFisico.ID AS ID 
 					FROM AcqFisico

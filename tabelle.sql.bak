@@ -8,10 +8,10 @@ CREATE TABLE CliCPC (
     DataNascita DATE,
     Telefono VARCHAR(10) UNIQUE,
     Sesso VARCHAR(10),
-	CHECK (Sesso='Maschio' OR Sesso='Femmina' OR Sesso='Altro')
-    Nazionalità VARCHAR(20),
+	CHECK (Sesso='Maschio' OR Sesso='Femmina' OR Sesso='Altro'),
+    Nazionalita VARCHAR(20),
     NumeroCarta CHAR(16) NOT NULL UNIQUE,
-    Città VARCHAR(30),
+    Citta VARCHAR(30),
     CAP VARCHAR(5),
     Via VARCHAR(20),
     NumeroCivico CHAR(4)
@@ -94,7 +94,7 @@ CREATE TABLE Fila (
 CREATE TABLE Posto (
     Numero INTEGER NOT NULL,
     Fila CHAR(1) NOT NULL REFERENCES Fila(Lettera) ON UPDATE CASCADE ON DELETE CASCADE,
-    Sala INTEGER NOT NULL REFERENCES Fila(Sala) ON UPDATE CASCADE ON DELETE CASCADE
+    Sala INTEGER NOT NULL REFERENCES Fila(Sala) ON UPDATE CASCADE ON DELETE CASCADE,
 	CHECK(Numero>0 AND Numero<19),
 	PRIMARY KEY(Numero,Fila,Sala)
 );
@@ -128,22 +128,22 @@ CREATE TABLE Orario (
 
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ID INTEGER PRIMARY KEY AUTO_INCREMENT,
     CostoTotale DECIMAL(6,2),
-	CHECK(CostoTotale>0)
+	CHECK(CostoTotale>0),
     Film VARCHAR(50) NOT NULL,
     DataAcq DATE NOT NULL,
     DataProiez DATE NOT NULL,
 	CHECK(DataAcq<=DataProiez),
     Orario TIME REFERENCES Orario(Numero),
-    Cliente CHAR(16) REFERENCES CliOnline(CodiceFiscale) 
+    Cliente CHAR(16) REFERENCES CliOnline(CodiceFiscale)
 );
 
 /*Creazione tabella Acquisto Biglietto Fisico*/
 CREATE TABLE AcqFisico (
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ID INTEGER PRIMARY KEY AUTO_INCREMENT,
     CostoTotale DECIMAL(6,2),
-	CHECK(CostoTotale>0)
+	CHECK(CostoTotale>0),
     Film VARCHAR(50) NOT NULL,
     DataProiez DATE NOT NULL,
     Orario INTEGER REFERENCES Orario(Numero),
@@ -201,7 +201,7 @@ CREATE TABLE SceltaOnline (
     Sala INTEGER NOT NULL REFERENCES Posto(Sala) ON UPDATE CASCADE ON DELETE NO ACTION,
     Fila CHAR(1) NOT NULL REFERENCES Posto(Fila) ON UPDATE CASCADE ON DELETE NO ACTION,
     Posto INTEGER NOT NULL REFERENCES Posto(Numero) ON UPDATE CASCADE ON DELETE NO ACTION,
-    Tariffa INTEGER NOT NULL REFERENCES Tariffario(Codice) ON UPDATE CASCADE ON DELETE NO ACTION 
+    Tariffa INTEGER NOT NULL REFERENCES Tariffario(Codice) ON UPDATE CASCADE ON DELETE NO ACTION,
 	PRIMARY KEY(AcqOnline,Sala,Fila,Posto,Tariffa)
 );
 

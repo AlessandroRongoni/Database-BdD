@@ -62,7 +62,7 @@ CREATE TABLE Film (
     Anno INTEGER,
 	CHECK(Anno<2100 AND Anno>1900),
     Durata INTEGER,
-    Valutazione DECIMAL(1,1),
+    Valutazione DECIMAL(2,1),
 	CHECK(Valutazione>=1.0 AND Valutazione<=5.0)
 );
 

@@ -28,14 +28,63 @@ INSERT INTO CliOnline (
                       ) VALUES (...);
 
 /*Operazione 3: inserimento nuovo Film*/
-
+INSERT INTO Film (
+                     Codice,
+                     Titolo,
+                     Anno,
+                     Durata,
+                     Valutazione
+                 ) VALUES (...);
 /*Operazione 4: inserimento nuovo Prodotto Bar*/
+INSERT INTO Prodotto (
+                         ID,
+                         Nome,
+                         Prezzo
+                     ) VALUES (...);
 /*Operazione 5: inserimento nuovo Menu Convenienza*/
 /*Operazione 6: inserimento nuovo Orario*/
+INSERT INTO Orario (
+                       Numero,
+                       OraInizio,
+                       OraFine
+                   ) VALUES (...);
 /*Operazione 7: inserimento nuovo Tariffa dei Biglietti*/
+INSERT INTO Tariffario (
+                           Codice,
+                           Descrizione,
+                           Prezzo
+                       ) VALUES (...);
+					   
 /*Operazione 8: inserimento nuovo Acquisto Biglietto Fisico*/
+INSERT INTO AcqFisico (
+                          ID,
+                          CostoTotale,
+                          Film,
+                          DataProiez,
+                          Orario,
+                          Cliente,
+                          Pagamento
+                      ) VALUES (...);
+					  
 /*Operazione 9: inserimento nuovo Acquisto Biglietto Online*/
+INSERT INTO AcqOnline (
+                          ID,
+                          CostoTotale,
+                          Film,
+                          DataAcq,
+                          DataProiez,
+                          Orario,
+                          Cliente
+                      ) VALUES (...);
+					  
 /*Operazione 10: inserimento nuovo Acquisto Bar*/
+INSERT INTO AcqBar (
+                       ID,
+                       Data,
+                       Ora,
+                       CostoTotale,
+                       Cliente
+                   ) VALUES (...);
 /*Operazione 11: inserimento nuovo Attore*/
 /*Operazione 12: inserimento nuovo Regista*/
 /*Operazione 13: modifica dati Cliente Card Passione Cinema */

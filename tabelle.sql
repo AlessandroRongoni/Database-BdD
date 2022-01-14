@@ -138,52 +138,48 @@ CREATE TABLE Appart (
 
 /*Creazione tabella Partecipazione*/
 CREATE TABLE Partecip (
-    Film    STRING REFERENCES Film (Codice) 
-                   NOT NULL,
-    Persona STRING REFERENCES Persona (Codice) 
-                   NOT NULL,
+    Film    STRING REFERENCES Film (Codice),
+    Persona STRING REFERENCES Persona (Codice),
     Ruolo   STRING NOT NULL
 );
 
 /*Creazione tabella Programmazione*/
 CREATE TABLE Program (
-    Film       STRING REFERENCES Film (Codice) 
-                      NOT NULL,
-    Sala       STRING REFERENCES Sala (Numero) 
-                      NOT NULL,
+    Film       STRING REFERENCES Film (Codice),
+    Sala       STRING REFERENCES Sala (Numero),
     DataInizio DATE   NOT NULL,
     DataFine   DATE   NOT NULL
 );
 
 /*Creazione tabella Scelta Fisica*/
 CREATE TABLE SceltaFisica (
-    AcqFisico INTEGER REFERENCES AcqFisico (ID) 
-                      NOT NULL,
-    Sala      INTEGER REFERENCES Sala (Numero) 
-                      NOT NULL,
-    Fila      CHAR    REFERENCES Posto (Fila) 
-                      NOT NULL,
-    Posto     INTEGER REFERENCES Posto (Numero) 
-                      NOT NULL,
+    AcqFisico INTEGER REFERENCES AcqFisico (ID),
+    Sala      INTEGER REFERENCES Sala (Numero),
+    Fila      CHAR    REFERENCES Posto (Fila),
+    Posto     INTEGER REFERENCES Posto (Numero),
     Tariffa   INTEGER REFERENCES Tariffario (Codice) 
-                      NOT NULL
+);
+
+/*Creazione tabella Scelta Online*/
+CREATE TABLE SceltaOnline (
+    AcqOnline  INTEGER REFERENCES AcqOnline (ID),
+    Sala       INTEGER REFERENCES Posto (Sala),
+    Fila       CHAR    REFERENCES Posto (Fila),
+    Posto      INTEGER REFERENCES Posto (Numero),
+    Tariffario INTEGER REFERENCES Tariffario (Codice) 
 );
 
 /*Creazione tabella Contenere*/
 CREATE TABLE Contenere (
-    AcqBar   INTEGER NOT NULL
-                     REFERENCES AcqBar (ID),
-    Prodotto INTEGER REFERENCES Prodotto (ID) 
-                     NOT NULL,
+    AcqBar   INTEGER REFERENCES AcqBar (ID),
+    Prodotto INTEGER REFERENCES Prodotto (ID),
     Quantita INTEGER NOT NULL
 );
 
 /*Creazione tabella Composto*/
 CREATE TABLE Compos (
-    Composto   INTEGER REFERENCES Prodotto (ID) 
-                       NOT NULL,
-    Componente INTEGER REFERENCES Prodotto (ID) 
-                       NOT NULL,
+    Composto   INTEGER REFERENCES Prodotto (ID),
+    Componente INTEGER REFERENCES Prodotto (ID),
     Quantita   INTEGER NOT NULL
 );
 

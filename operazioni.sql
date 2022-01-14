@@ -29,35 +29,45 @@ INSERT INTO CliOnline (
 
 /*Operazione 3: inserimento nuovo Film*/
 INSERT INTO Film (
-                     Codice,
+                     Codice, /*ID deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                      Titolo,
                      Anno,
                      Durata,
                      Valutazione
                  ) VALUES (...);
+				 
 /*Operazione 4: inserimento nuovo Prodotto Bar*/
 INSERT INTO Prodotto (
-                         ID,
+                         ID, /*ID deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                          Nome,
                          Prezzo
                      ) VALUES (...);
+					 
 /*Operazione 5: inserimento nuovo Menu Convenienza*/
+
+
 /*Operazione 6: inserimento nuovo Orario*/
 INSERT INTO Orario (
-                       Numero,
+                       Numero, /*Numero deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                        OraInizio,
                        OraFine
                    ) VALUES (...);
+				   
 /*Operazione 7: inserimento nuovo Tariffa dei Biglietti*/
 INSERT INTO Tariffario (
-                           Codice,
+                           Codice, /*Codice deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                            Descrizione,
                            Prezzo
                        ) VALUES (...);
 					   
 /*Operazione 8: inserimento nuovo Acquisto Biglietto Fisico*/
 INSERT INTO AcqFisico (
-                          ID,
+                          ID, /*ID deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                           CostoTotale,
                           Film,
                           DataProiez,
@@ -68,7 +78,8 @@ INSERT INTO AcqFisico (
 					  
 /*Operazione 9: inserimento nuovo Acquisto Biglietto Online*/
 INSERT INTO AcqOnline (
-                          ID,
+                          ID, /*ID deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                           CostoTotale,
                           Film,
                           DataAcq,
@@ -79,32 +90,78 @@ INSERT INTO AcqOnline (
 					  
 /*Operazione 10: inserimento nuovo Acquisto Bar*/
 INSERT INTO AcqBar (
-                       ID,
+                       ID, /*ID deve essere NULL in quanto tramite l'auto-increment
+						       esso si autoincrementerà*/
                        Data,
                        Ora,
                        CostoTotale,
                        Cliente
                    ) VALUES (...);
+				   
 /*Operazione 11: inserimento nuovo Attore*/
+
 /*Operazione 12: inserimento nuovo Regista*/
+
 /*Operazione 13: modifica dati Cliente Card Passione Cinema */
+UPDATE CliCPC SET   Nome=<nome>, Cognome=<cognome>, DataNascita=<datanascita>,
+					Telefono=<telefono>, Sesso=<sesso>, Nazionalita=<nazionalita>, NumeroCarta=<numerocarta>,
+					Citta=<citta>, CAP=<cap>, Via=<via>, NumeroCivico=<numerocivico>
+WHERE CodiceFiscale=<codicefiscale>;
+					
 /*Operazione 14: modifica dati Cliente Online*/
+UPDATE CliOnline SET Nome=<nome>, Cognome=<cognome>, DataNascita=<datanascita>,
+					 Telefono=<telefono>, Email=<email>, Password=<password>
+WHERE CodiceFiscale=<codicefiscale>;
+					
 /*Operazione 15: modifica di una Tariffa dei Biglietti*/
+UPDATE Tariffario SET Descrizione=<descrizione>, Prezzo=<prezzo>
+WHERE Codice=<codice>;
+
 /*Operazione 16: modifica di un Prodotto Bar*/
+UPDATE Prodotto SET Nome=<nome>, Prezzo=<prezzo>
+WHERE ID=<id>;
+
 /*Operazione 17: modifica di un Menu Convenienza*/
+
 /*Operazione 18: modifica di un Orario*/
+UPDATE Orario SET OraInizio=<orainizio>, OraFine=<orafine>
+WHERE Numero=<numero>;
+
 /*Operazione 19: cancellazione di un Prodotto Bar*/
+DELETE FROM Prodotto WHERE ID=<id>; 
+
 /*Operazione 20: cancellazione di un Menu Convenienza*/
+
 /*Operazione 21: cancellazione di un Orario*/
+DELETE FROM Orario WHERE Numero=<numero>;
+
 /*Operazione 22: cancellazione di una Tariffa dei Biglietti*/
+DELETE FROM Tariffario WHERE Codice=<codice>;
+
 /*Operazione 23: cancellazione di un Cliente Card Passione Cinema*/
+DELETE FROM CliCPC WHERE CodiceFiscale=<codicefiscale>;
+
 /*Operazione 24: cancellazione di un Cliente Online*/
+DELETE FROM CliOnline WHERE CodiceFiscale=<codicefiscale>;
+
 /*Operazione 25: consultazione dati Tariffario*/
+SELECT * FROM Tariffario;
+
 /*Operazione 26: consultazione dati Prodotto Bar*/
+SELECT * FROM Prodotto;
+
 /*Operazione 27: consultazione dati Menu Convenienza*/
+
+
 /*Operazione 28: consultazione dati Cliente Card Passione Cinema*/
+SELECT * FROM CliCPC;
+
 /*Operazione 29: consultazione dati Cliente Online*/
-/*Operazione 30: consultazione dati Orario Film*/
+SELECT * FROM CliOnline;
+
+/*Operazione 30: consultazione dati Orario*/
+SELECT * FROM Orario;
+
 /*Operazione 31: consultazione Posti Disponibili*/
 /*Operazione 32: consultazione Costo Totale Acquisto Biglietto Fisico*/
 /*Operazione 33: consultazione Costo Totale Acquisto Biglietto Online*/

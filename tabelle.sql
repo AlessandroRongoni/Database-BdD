@@ -58,18 +58,70 @@ CREATE TABLE Film (
     Valutazione DECIMAL
 );
 
+/*Creazione tabella Persona*/
+CREATE TABLE Persona (
+    Codice      INTEGER     PRIMARY KEY,
+    Nome        STRING (20) NOT NULL,
+    Cognome     STRING (20) NOT NULL,
+    Ruolo       STRING      NOT NULL,
+    DataNascita DATE        NOT NULL
+);
+
+/*Creazione tabella Sala*/
+CREATE TABLE Sala (
+    Numero    INTEGER PRIMARY KEY,
+    Metratura DECIMAL NOT NULL
+);
+
+/*Creazione tabella Fila*/
+CREATE TABLE Fila (
+    Lettera CHAR PRIMARY KEY,
+    Sala         REFERENCES Sala (Numero) 
+);
 
 
+/*Creazione tabella Posto*/
+CREATE TABLE Posto (
+    Numero INTEGER PRIMARY KEY,
+    Fila   CHAR    REFERENCES Fila (Lettera),
+    Sala   INTEGER REFERENCES Sala (Numero) 
+);
 
+/*Creazione tabella Tariffario*/
+CREATE TABLE Tariffario (
+    Codice      STRING  PRIMARY KEY,
+    Descrizione STRING  NOT NULL,
+    Prezzo      DECIMAL NOT NULL
+);
 
+/*Creazione tabella Orario*/
+CREATE TABLE Orario (
+    Numero    INTEGER PRIMARY KEY,
+    OraInizio TIME    NOT NULL,
+    OraFine   TIME    NOT NULL
+);
 
+/*Creazione tabella Acquisto Biglietto Online*/
+CREATE TABLE AcqOnline (
+    ID          INTEGER PRIMARY KEY,
+    CostoTotale DECIMAL NOT NULL,
+    Film        STRING  NOT NULL,
+    DataAcq     DATE    NOT NULL,
+    DataProiez  DATE    NOT NULL,
+    Orario      INTEGER REFERENCES Orario (Numero),
+    Cliente     STRING  REFERENCES CliOnline (CodiceFiscale) 
+);
 
-
-
-
-
-
-
+/*Creazione tabella Acquisto Biglietto Fisico*/
+CREATE TABLE AcqFisico (
+    ID          INTEGER PRIMARY KEY AUTOINCREMENT,
+    CostoTotale DECIMAL NOT NULL,
+    Film        STRING  NOT NULL,
+    DataProiez  DATE    NOT NULL,
+    Orario      INTEGER REFERENCES Orario (Numero),
+    Cliente     STRING  REFERENCES CliCPC (CodiceFiscale),
+    Pagamento   STRING  NOT NULL
+);
 
 
 

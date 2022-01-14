@@ -10,7 +10,7 @@ CREATE TABLE CliCPC (
     Sesso         STRING      NOT NULL,
     Nazionalita   STRING      NOT NULL,
     NumeroCarta   STRING      NOT NULL,
-    Citta         STRING (5)  NOT NULL,
+    Citta         STRING 	  NOT NULL,
     CAP           STRING (5)  NOT NULL,
     Via           STRING      NOT NULL,
     NumeroCivico  STRING      NOT NULL

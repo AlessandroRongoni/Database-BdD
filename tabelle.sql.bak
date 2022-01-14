@@ -140,7 +140,6 @@ CREATE TABLE AcqFisico (
 /*Relazioni*/
 
 
-
 /*Creazione tabella Appartenenza*/
 CREATE TABLE Appart (
     Film   STRING REFERENCES Film (Codice),
@@ -170,14 +169,6 @@ CREATE TABLE SceltaFisica (
     Posto     INTEGER REFERENCES Posto (Numero),
     Tariffa   INTEGER REFERENCES Tariffario (Codice) 
 );
-
-
-
-
-
-
-
-
 
 
 

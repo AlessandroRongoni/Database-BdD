@@ -50,6 +50,8 @@ CREATE TABLE Genere (
     Genere STRING PRIMARY KEY
 );
 
+
+
 /*Creazione tabella Film*/
 CREATE TABLE Film (
     Codice      INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -101,6 +103,15 @@ CREATE TABLE Orario (
     OraInizio TIME    NOT NULL,
     OraFine   TIME    NOT NULL
 );
+
+
+
+
+
+
+
+
+
 
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
@@ -159,6 +170,16 @@ CREATE TABLE SceltaFisica (
     Posto     INTEGER REFERENCES Posto (Numero),
     Tariffa   INTEGER REFERENCES Tariffario (Codice) 
 );
+
+
+
+
+
+
+
+
+
+
 
 /*Creazione tabella Scelta Online*/
 CREATE TABLE SceltaOnline (

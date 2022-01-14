@@ -57,7 +57,7 @@ CREATE TABLE Genere (
 
 /*Creazione tabella Film*/
 CREATE TABLE Film (
-    Codice INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codice INTEGER PRIMARY KEY AUTO_INCREMENT,
     Titolo VARCHAR(50) NOT NULL,
     Anno INTEGER,
 	CHECK(Anno<2100 AND Anno>1900),
@@ -68,7 +68,7 @@ CREATE TABLE Film (
 
 /*Creazione tabella Persona*/
 CREATE TABLE Persona (
-    Codice INTEGER PRIMARY KEY AUTOINCREMENT,
+    Codice INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nome VARCHAR(20) NOT NULL,
     Cognome VARCHAR(20) NOT NULL,
     DataNascita DATE
@@ -109,7 +109,7 @@ CREATE TABLE Tariffario (
 
 /*Creazione tabella Orario*/
 CREATE TABLE Orario (
-    Numero INTEGER PRIMARY KEY,
+    Numero INTEGER PRIMARY KEY AUTO_INCREMENT,
     OraInizio TIME NOT NULL,
     OraFine TIME NOT NULL,
 	CHECK((OraInizio='16:00:00' AND OraFine<='19:00:00')

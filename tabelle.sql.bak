@@ -108,21 +108,19 @@ CREATE TABLE AcqOnline (
     Film        STRING  NOT NULL,
     DataAcq     DATE    NOT NULL,
     DataProiez  DATE    NOT NULL,
-    Orario      INTEGER REFERENCES Orario (Numero) 
-                        NOT NULL,
+    Orario      INTEGER REFERENCES Orario (Numero),
     Cliente     STRING  REFERENCES CliOnline (CodiceFiscale) 
-                        NOT NULL
 );
 
 /*Creazione tabella Acquisto Biglietto Fisico*/
 CREATE TABLE AcqFisico (
-    ID          INTEGER PRIMARY KEY AUTOINCREMENT,
-    CostoTotale DECIMAL NOT NULL,
-    Film        STRING  NOT NULL,
-    DataProiez  DATE    NOT NULL,
-    Orario      INTEGER REFERENCES Orario (Numero),
-    Cliente     STRING  REFERENCES CliCPC (CodiceFiscale),
-    Pagamento   STRING  NOT NULL
+    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
+    CostoTotale DECIMAL     NOT NULL,
+    Film        STRING      NOT NULL,
+    DataProiez  DATE        NOT NULL,
+    Orario      INTEGER     REFERENCES Orario (Numero),
+    Cliente     STRING (16) REFERENCES CliCPC (CodiceFiscale),
+    Pagamento   STRING      NOT NULL
 );
 
 

@@ -2,106 +2,106 @@
 
 /*Creazione tabella Cliente Carta Passione Cinema*/
 CREATE TABLE CliCPC (
-    CodiceFiscale STRING (16) PRIMARY KEY,
-    Nome          STRING (20) NOT NULL,
-    Cognome       STRING (20) NOT NULL,
-    DataNascita   DATE        NOT NULL,
-    Telefono      STRING (10) NOT NULL,
-    Sesso         STRING      NOT NULL,
-    Nazionalita   STRING      NOT NULL,
-    NumeroCarta   STRING      NOT NULL,
-    Citta         STRING 	  NOT NULL,
-    CAP           STRING (5)  NOT NULL,
-    Via           STRING      NOT NULL,
-    NumeroCivico  STRING      NOT NULL
+    CodiceFiscale CHAR(16) PRIMARY KEY,
+    Nome VARCHAR(20) NOT NULL,
+    Cognome VARCHAR(20) NOT NULL,
+    DataNascita DATE,
+    Telefono VARCHAR(10) UNIQUE,
+    Sesso VARCHAR(10),
+	CHECK (Sesso='Maschio' OR Sesso='Femmina' OR Sesso='Altro')
+    Nazionalità VARCHAR(20),
+    NumeroCarta CHAR(16) NOT NULL UNIQUE,
+    Città VARCHAR(30),
+    CAP VARCHAR(5),
+    Via VARCHAR(20),
+    NumeroCivico CHAR(4)
 );
 
 /*Creazione tabella Cliente Online*/					 
 CREATE TABLE CliOnline (
-    CodiceFiscale STRING (16) PRIMARY KEY,
-    Nome          STRING (20) NOT NULL,
-    Cognome       STRING (20) NOT NULL,
-    DataNascita   DATE        NOT NULL,
-    Telefono      STRING      NOT NULL,
-    Email         STRING      NOT NULL,
-    Password      STRING      NOT NULL
+    CodiceFiscale CHAR(16) PRIMARY KEY,
+    Nome VARCHAR(20) NOT NULL,
+    Cognome VARCHAR(20) NOT NULL,
+    DataNascita DATE,
+    Telefono CHAR(10),
+    Email VARCHAR(30) NOT NULL UNIQUE,
+    Password VARCHAR(20) NOT NULL
 );
 
 /*Creazione tabella Acquisto Bar*/
 CREATE TABLE AcqBar (
-    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
-    Data        DATE        NOT NULL,
-    Ora         TIME        NOT NULL,
-    CostoTotale DECIMAL     NOT NULL,
-    Cliente     STRING (16) NOT NULL
-                            REFERENCES CliCPC (CodiceFiscale) 
+    ID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Data DATE,
+    Ora TIME,
+    CostoTotale DECIMAL(6,2) NOT NULL,
+    Cliente CHAR(16) REFERENCES CliCPC(CodiceFiscale) ON UPDATE CASCADE
 );
+
 
 /*Creazione tabella Prodotto*/
 CREATE TABLE Prodotto (
-    ID     INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nome   STRING  NOT NULL,
-    Prezzo DECIMAL NOT NULL
+    ID INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(20) NOT NULL UNIQUE,
+    Prezzo DECIMAL(6,2)
 );
 
 
 /*Creazione tabella Genere*/
 CREATE TABLE Genere (
-    Genere STRING PRIMARY KEY
+    Genere VARCHAR(20) PRIMARY KEY
 );
 
 
 
 /*Creazione tabella Film*/
 CREATE TABLE Film (
-    Codice      INTEGER PRIMARY KEY AUTOINCREMENT,
-    Titolo      STRING  NOT NULL,
-    Anno        STRING  NOT NULL,
-    Durata      INTEGER NOT NULL,
-    Valutazione DECIMAL
+    Codice INTEGER PRIMARY KEY AUTOINCREMENT,
+    Titolo VARCHAR(50) NOT NULL,
+    Anno YEAR,
+    Durata INTEGER,
+    Valutazione DECIMAL(1,1)
 );
 
 /*Creazione tabella Persona*/
 CREATE TABLE Persona (
-    Codice      INTEGER     PRIMARY KEY AUTOINCREMENT,
-    Nome        STRING (20) NOT NULL,
-    Cognome     STRING (20) NOT NULL,
-    Ruolo       STRING      NOT NULL,
-    DataNascita DATE        NOT NULL
+    Codice INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nome VARCHAR(20) NOT NULL,
+    Cognome VARCHAR(20) NOT NULL,
+    DataNascita DATE
 );
 
 /*Creazione tabella Sala*/
 CREATE TABLE Sala (
-    Numero    INTEGER PRIMARY KEY,
-    Metratura DECIMAL NOT NULL
+    Numero INTEGER PRIMARY KEY,
+    Metratura DECIMAL(5,2)
 );
 
 /*Creazione tabella Fila*/
 CREATE TABLE Fila (
-    Lettera CHAR PRIMARY KEY,
-    Sala         REFERENCES Sala (Numero) 
+    Lettera CHAR(1) PRIMARY KEY,
+    Sala INTEGER REFERENCES Sala(Numero) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
 /*Creazione tabella Posto*/
 CREATE TABLE Posto (
     Numero INTEGER PRIMARY KEY,
-    Fila   CHAR    REFERENCES Fila (Lettera),
-    Sala   INTEGER REFERENCES Sala (Numero) 
+    Fila CHAR(1) REFERENCES Fila(Lettera) ON UPDATE CASCADE ON DELETE CASCADE,
+    Sala INTEGER REFERENCES Fila(Sala) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 /*Creazione tabella Tariffario*/
 CREATE TABLE Tariffario (
-    Codice      INTEGER PRIMARY KEY AUTOINCREMENT,
-    Descrizione STRING  NOT NULL,
-    Prezzo      DECIMAL NOT NULL
+    Codice INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Descrizione VARCHAR(20) NOT NULL,
+    Prezzo DECIMAL NOT NULL
 );
 
 /*Creazione tabella Orario*/
 CREATE TABLE Orario (
-    Numero    INTEGER PRIMARY KEY AUTOINCREMENT,
-    OraInizio TIME    NOT NULL,
-    OraFine   TIME    NOT NULL
+    Numero INTEGER PRIMARY KEY,
+    OraInizio TIME NOT NULL,
+    OraFine TIME NOT NULL
 );
 
 
@@ -115,24 +115,24 @@ CREATE TABLE Orario (
 
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
-    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
-    CostoTotale DECIMAL     NOT NULL,
-    Film        STRING      NOT NULL,
-    DataAcq     DATE        NOT NULL,
-    DataProiez  DATE        NOT NULL,
-    Orario      INTEGER     REFERENCES Orario (Numero),
-    Cliente     STRING (16) REFERENCES CliOnline (CodiceFiscale) 
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CostoTotale DECIMAL NOT NULL,
+    Film VARCHAR(50) NOT NULL,
+    DataAcq DATE NOT NULL,
+    DataProiez DATE NOT NULL,
+    Orario TIME REFERENCES Orario(Numero),
+    Cliente CHAR(16) REFERENCES CliOnline(CodiceFiscale) 
 );
 
 /*Creazione tabella Acquisto Biglietto Fisico*/
 CREATE TABLE AcqFisico (
-    ID          INTEGER     PRIMARY KEY AUTOINCREMENT,
-    CostoTotale DECIMAL     NOT NULL,
-    Film        STRING      NOT NULL,
-    DataProiez  DATE        NOT NULL,
-    Orario      INTEGER     REFERENCES Orario (Numero),
-    Cliente     STRING (16) REFERENCES CliCPC (CodiceFiscale),
-    Pagamento   STRING      NOT NULL
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CostoTotale DECIMAL(6,2) NOT NULL,
+    Film VARCHAR(50) NOT NULL,
+    DataProiez DATE NOT NULL,
+    Orario INTEGER REFERENCES Orario(Numero),
+    Cliente CHAR(16) REFERENCES CliCPC(CodiceFiscale),
+    Pagamento VARCHAR(20) NOT NULL
 );
 
 
@@ -142,57 +142,57 @@ CREATE TABLE AcqFisico (
 
 /*Creazione tabella Appartenenza*/
 CREATE TABLE Appart (
-    Film   STRING REFERENCES Film (Codice),
-    Genere STRING REFERENCES Genere (Genere) 
+    Film INTEGER REFERENCES Film(Codice) ON UPDATE CASCADE ON DELETE CASCADE,
+    Genere INTEGER REFERENCES Genere(Genere) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 /*Creazione tabella Partecipazione*/
 CREATE TABLE Partecip (
-    Film    STRING REFERENCES Film (Codice),
-    Persona STRING REFERENCES Persona (Codice),
-    Ruolo   STRING NOT NULL
+    Film INTEGER REFERENCES Film(Codice) ON UPDATE CASCADE ON DELETE CASCADE,
+    Persona INTEGER REFERENCES Persona(Codice) ON UPDATE CASCADE ON DELETE CASCADE,
+    Ruolo VARCHAR(10) NOT NULL
 );
 
 /*Creazione tabella Programmazione*/
 CREATE TABLE Program (
-    Film       STRING REFERENCES Film (Codice),
-    Sala       STRING REFERENCES Sala (Numero),
-    DataInizio DATE   NOT NULL,
-    DataFine   DATE   NOT NULL
+    Film INTEGER REFERENCES Film(Codice) ON UPDATE CASCADE ON DELETE CASCADE,
+    Sala INTEGER REFERENCES Sala(Numero) ON UPDATE CASCADE ON DELETE CASCADE,
+    DataInizio DATE,
+    DataFine DATE
 );
 
 /*Creazione tabella Scelta Fisica*/
 CREATE TABLE SceltaFisica (
-    AcqFisico INTEGER REFERENCES AcqFisico (ID),
-    Sala      INTEGER REFERENCES Sala (Numero),
-    Fila      CHAR    REFERENCES Posto (Fila),
-    Posto     INTEGER REFERENCES Posto (Numero),
-    Tariffa   INTEGER REFERENCES Tariffario (Codice) 
+    AcqFisico INTEGER REFERENCES AcqFisico(ID) ON UPDATE CASCADE ON DELETE CASCADE,
+    Sala INTEGER REFERENCES Posto(Sala) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Fila CHAR(1) REFERENCES Posto(Fila) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Posto INTEGER REFERENCES Posto(Numero) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Tariffa INTEGER REFERENCES Tariffario(Codice) ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
 
 
 /*Creazione tabella Scelta Online*/
 CREATE TABLE SceltaOnline (
-    AcqOnline  INTEGER REFERENCES AcqOnline (ID),
-    Sala       INTEGER REFERENCES Posto (Sala),
-    Fila       CHAR    REFERENCES Posto (Fila),
-    Posto      INTEGER REFERENCES Posto (Numero),
-    Tariffario INTEGER REFERENCES Tariffario (Codice) 
+    AcqOnline INTEGER REFERENCES AcqOnline(ID) ON UPDATE CASCADE ON DELETE CASCADE,
+    Sala INTEGER REFERENCES Posto(Sala) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Fila CHAR(1) REFERENCES Posto(Fila) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Posto INTEGER REFERENCES Posto(Numero) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Tariffa INTEGER REFERENCES Tariffario(Codice) ON UPDATE CASCADE ON DELETE NO ACTION 
 );
 
 /*Creazione tabella Contenere*/
 CREATE TABLE Contenere (
-    AcqBar   INTEGER REFERENCES AcqBar (ID),
-    Prodotto INTEGER REFERENCES Prodotto (ID),
+    AcqBar INTEGER REFERENCES AcqBar(ID) ON UPDATE CASCADE ON DELETE CASCADE,
+    Prodotto INTEGER REFERENCES Prodotto(ID) ON UPDATE CASCADE ON DELETE NO ACTION,
     Quantita INTEGER NOT NULL
 );
 
 /*Creazione tabella Composto*/
 CREATE TABLE Compos (
-    Composto   INTEGER REFERENCES Prodotto (ID),
-    Componente INTEGER REFERENCES Prodotto (ID),
-    Quantita   INTEGER NOT NULL
+    Composto INTEGER REFERENCES Prodotto(ID) ON UPDATE CASCADE ON DELETE CASCADE,
+    Componente INTEGER REFERENCES Prodotto(ID) ON UPDATE CASCADE ON DELETE NO ACTION,
+    Quantita INTEGER NOT NULL
 );
 
 

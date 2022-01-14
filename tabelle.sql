@@ -1,4 +1,4 @@
-/*Creazione tabella Clienti Carta Passione Cinema*/
+/*Creazione tabella Cliente Carta Passione Cinema*/
 CREATE TABLE CliCPC (
     CodiceFiscale STRING (16) PRIMARY KEY,
     Nome          STRING (20) NOT NULL,
@@ -31,7 +31,7 @@ INSERT INTO CliCPC (
                    );
 
 /*Operazione lettura tabella Cliente Carta Passione Cinema*/
-SELECT 					CodiceFiscale,
+				SELECT 	CodiceFiscale,
 						Nome,
                         Cognome,
                         DataNascita,
@@ -45,22 +45,37 @@ SELECT 					CodiceFiscale,
                         NumeroCivico
                      FROM CliCPC;
 
-					 
-CREATE TABLE Cliente_Online (
-    codice_fiscale STRING (16) PRIMARY KEY,
-    Nome           STRING (20) NOT NULL,
-    Cognome        STRING (20) NOT NULL,
-    Data_Nascita   DATE        NOT NULL,
-    Telefono       STRING      NOT NULL,
-    Email          STRING      NOT NULL,
-    Password       STRING      NOT NULL
+
+/*Creazione tabella Cliente Online*/					 
+CREATE TABLE CliOnline (
+    CodiceFiscale STRING (16) PRIMARY KEY,
+    Nome          STRING (20) NOT NULL,
+    Cognome       STRING (20) NOT NULL,
+    DataNascita   DATE        NOT NULL,
+    Telefono      STRING      NOT NULL,
+    Email         STRING      NOT NULL,
+    Password      STRING      NOT NULL
 );
 
-CREATE TABLE prova_commit (
-     nome STRING (10) PRIMARY KEY,
-);
+/*Operazione inserimento nuovo Cliente Online*/
+INSERT INTO CliOnline (
+                          CodiceFiscale,
+                          Nome,
+                          Cognome,
+                          DataNascita,
+                          Telefono,
+                          Email,
+                          Password
+                      );
 
 
+/*Operazione lettura tabella Cliente Online*/
 
-
-
+				SELECT  	CodiceFiscale,
+                            Nome,
+                            Cognome,
+                            DataNascita,
+                            Telefono,
+                            Email,
+                            Password
+                        FROM CliOnline;

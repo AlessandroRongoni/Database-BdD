@@ -125,25 +125,6 @@ CREATE TABLE AcqFisico (
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*Relazioni*/
 
 

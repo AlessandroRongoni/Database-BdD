@@ -147,14 +147,14 @@ SELECT * FROM CliOnline WHERE CodiceFiscale=<codicefiscale>;
 SELECT * FROM Orario;
 
 /*Operazione 32: consultazione Posti Non Disponibili di una sala*/
-SELECT SceltaFisica.Posto,SceltaFisica.Fila,
+SELECT SceltaFisica.Posto,SceltaFisica.Fila
 FROM SceltaFisica,(SELECT AcqFisico.ID AS ID 
 					FROM AcqFisico
 					WHERE AcqFisico.DataProiez= <Datad> AND AcqFisico.Orario=<numero>)Tab
 WHERE SceltaFisica.Sala=<Sala> AND Tab.ID=SceltaFisica.AcqFisico;
 /*Per gli acquisti fisici*/
 
-SELECT SceltaOnline.Posto,SceltaOnline.Fila,
+SELECT SceltaOnline.Posto,SceltaOnline.Fila
 FROM SceltaOnline,(SELECT AcqOnline.ID AS ID 
 					FROM AcqOnline
 					WHERE AcqOnline.DataProiez= <Datad> AND AcqOnline.Orario=<numero>)Tab
@@ -184,60 +184,65 @@ FROM Film
 WHERE Codice=<codice> AND NOT EXISTS(SELECT * FROM Program WHERE Film=<codice>);
 
 /*Operazione 38: consultazione vendite fisiche Film in programmazione ultima settimana*/
+DA RIVEDERE*****
 SELECT COUNT(*) AS VentiteFisiche
 FROM AcqFisico
 WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>;
 
 /*Operazione 39: consultazione vendite online Film in programmazione ultima settimana*/
+DA RIVEDERE*****
 SELECT COUNT(*) AS VenditeOnline
 FROM AcqOnline
 WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>;
 
 /*Operazione 40: visualizzazione Prodotto Bar piu acquistato*/
-
-SELECT Prodotto.Codice AS Codice,Prodotto.Nome AS Prodotto,MAX(Tab.Vendite) AS Vendite
-FROM (SELECT COUNT(*) AS Vendite, Prodotto FROM Contenere GROUP BY Prodotto) Tab,Prodotto
-WHERE Tab.Prodotto=Prodotto.Codice;
+SELECT Prodotto.ID AS ID, Prodotto.Nome AS Nome, Count(*) AS Vendite
+FROM Prodotto,Contenere
+WHERE Prodotto.ID=Contenere.Prodotto
+GROUP BY Prodotto.ID
+ORDER BY Vendite DESC LIMIT 1;
 
 /*Operazione 41: visualizzazione Clienti Card Passione Cinema con piu acquisti*/
-SELECT TOP 10 COUNT(*) AS Acquisti, CliCPC.CodiceFiscale AS CodiceFiscale, CliCPC.Nome AS Nome, CliCPC.Cognome AS Cognome 
+SELECT COUNT(*) AS Acquisti, CliCPC.CodiceFiscale AS CodiceFiscale, CliCPC.Nome AS Nome, CliCPC.Cognome AS Cognome 
 FROM AcqFisico,CliCPC
 WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
-GROUP BY AcqFisico.Cliente ORDER BY Acquisti;
+GROUP BY AcqFisico.Cliente ORDER BY Acquisti DESC Limit 10;
 
 /*Operazione 42: visualizzazione Clienti Online con nessun acquisto nell'ultimo mese*/
+DA RIVEDERE**************
 SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
 FROM CliOnline,AcqOnline, (SELECT COUNT(*) AS Acquisti, Cliente FROM AcqOnline GROUP BY Cliente) Tab
 WHERE CliOnline.CodiceFiscale=AcqOnline.Cliente AND AcqOnline.Cliente=Tab.Cliente AND Tab.Acquisti=0;
 
 /*Operazione 43: visualizzazione Sala con piu acquisti nell'ultimo anno*/
-SELECT TOP 1 COUNT(SceltaFisica.Posto) AS Acquisti, SceltaFisica.Sala 
-FROM SceltaFisica,AcqFisico 
-GROUP BY SceltaFisica.Sala 
-WHERE YEAR(AcqFisico.DataProiez)= <Anno>);
+SELECT COUNT(SceltaFisica.Posto) AS Acquisti, SceltaFisica.Sala 
+FROM SceltaFisica,AcqFisico
+WHERE YEAR(AcqFisico.DataProiez)= <Anno> 
+GROUP BY SceltaFisica.Sala ORDER BY Acquisti DESC LIMIT 1;
 /*Per gli acquisti fisici*/
 
-SELECT TOP 1 COUNT(SceltaOnline.Posto) AS Acquisti, SceltaOnline.Sala 
+SELECT COUNT(SceltaOnline.Posto) AS Acquisti, SceltaOnline.Sala 
 FROM SceltaOnline,AcqOnline 
-GROUP BY SceltaOnline.Sala 
-WHERE YEAR(AcqOnline.DataProiez)= <Anno>);
+WHERE YEAR(AcqOnline.DataProiez)= <Anno>
+GROUP BY SceltaOnline.Sala ORDER BY Acquisti DESC LIMIT 1;
 /*Per gli acquisti Online*/
 
 /*Operazione 44: visualizzazione Tipologia di Biglietti piu acquistati*/
-SELECT TOP 5 COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
+SELECT COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
 FROM SceltaFisica,Tariffario
 WHERE Tariffario.Codice=SceltaFisica.Tariffa
-GROUP BY SceltaFisica.Tariffa ORDER BY Acquisti;
+GROUP BY SceltaFisica.Tariffa ORDER BY Acquisti DESC LIMIT 5;
 /*Per gli acquisti fisici*/
 
-SELECT TOP 5 COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
+SELECT COUNT(*) AS Acquisti, Tariffario.Descrizione As Biglietto
 FROM SceltaOnline,Tariffario
 WHERE Tariffario.Codice=SceltaOnline.Tariffa
-GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti;
+GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti DESC LIMIT 5;
 /*Per gli acquisti Online*/
 
 
 /*Operazione 45: visualizzazione Clienti Card Passione Cinema con piu acquisti per eta*/ 
+DA RIVEDERE***************
 SELECT TOP 10 COUNT(*) AS Acquisti, DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766 AS Eta
 FROM CliCPC,AcqFisico
 WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
@@ -280,7 +285,7 @@ WHERE YEAR(DataProiez)= <Anno>;
 /*Operazione 52: visualizzazione incassi Acquisti Fisici Clienti Carta Passione Cinema annuali*/
 SELECT SUM(CostoTotale) AS IncassiClientiCPCAnnuali
 FROM AcqFisico
-WHERE YEAR(DataProiez)= <Anno> AND Cliente NOT NULL;
+WHERE YEAR(DataProiez)= <Anno> AND Cliente IS NOT NULL;
 
 /*Operazione 53: visualizzazione incassi Acquisti Online annuali*/
 SELECT SUM(CostoTotale) AS IncassiOnlineAnnuali

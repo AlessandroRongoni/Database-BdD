@@ -118,14 +118,6 @@ CREATE TABLE Orario (
 );
 
 
-
-
-
-
-
-
-
-
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
     ID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -154,13 +146,13 @@ CREATE TABLE AcqFisico (
 
 
 
-/*Relazioni*/
 
+/*Relazioni*/
 
 /*Creazione tabella Appartenenza*/
 CREATE TABLE Appart (
     Film INTEGER NOT NULL REFERENCES Film(Codice) ON UPDATE CASCADE ON DELETE CASCADE,
-    Genere INTEGER NOT NULL REFERENCES Genere(Genere) ON UPDATE CASCADE ON DELETE CASCADE,
+    Genere VARCHAR(16) NOT NULL REFERENCES Genere(Genere) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY(Film,Genere)
 );
 

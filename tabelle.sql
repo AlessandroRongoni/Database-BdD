@@ -118,14 +118,6 @@ CREATE TABLE Orario (
 );
 
 
-
-
-
-
-
-
-
-
 /*Creazione tabella Acquisto Biglietto Online*/
 CREATE TABLE AcqOnline (
     ID INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -135,7 +127,7 @@ CREATE TABLE AcqOnline (
     DataAcq DATE NOT NULL,
     DataProiez DATE NOT NULL,
 	CHECK(DataAcq<=DataProiez),
-    Orario TIME REFERENCES Orario(Numero),
+    Orario INTEGER REFERENCES Orario(Numero),
     Cliente CHAR(16) NOT NULL REFERENCES CliOnline(CodiceFiscale)
 );
 
@@ -154,8 +146,8 @@ CREATE TABLE AcqFisico (
 
 
 
-/*Relazioni*/
 
+/*Relazioni*/
 
 /*Creazione tabella Appartenenza*/
 CREATE TABLE Appart (

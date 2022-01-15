@@ -184,14 +184,12 @@ FROM Film
 WHERE Codice=<codice> AND NOT EXISTS(SELECT * FROM Program WHERE Film=<codice>);
 
 /*Operazione 38: consultazione vendite fisiche Film in programmazione ultima settimana*/
-DA RIVEDERE*****
 SELECT COUNT(*) AS VentiteFisiche, Film
 FROM AcqFisico
 WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>
 GROUP BY Film;
 
 /*Operazione 39: consultazione vendite online Film in programmazione ultima settimana*/
-DA RIVEDERE*****
 SELECT COUNT(*) AS VenditeOnline, Film
 FROM AcqOnline
 WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>
@@ -213,8 +211,20 @@ GROUP BY AcqFisico.Cliente ORDER BY Acquisti DESC Limit 10;
 /*Operazione 42: visualizzazione Clienti Online con nessun acquisto nell'ultimo mese*/
 DA RIVEDERE**************
 SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
-FROM CliOnline,AcqOnline, (SELECT COUNT(*) AS Acquisti, Cliente FROM AcqOnline GROUP BY Cliente) Tab
-WHERE CliOnline.CodiceFiscale=AcqOnline.Cliente AND AcqOnline.Cliente=Tab.Cliente AND Tab.Acquisti=0;
+FROM CliOnline
+WHERE NOT EXISTS(SELECT 1 FROM AcqOnline WHERE CliOnline.CodiceFiscale= AcqOnline.Cliente AND YEAR(DataProiez)= 2021 AND MONTH(DataProiez)= 02);
+
+SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
+FROM CliOnline LEFT JOIN AcqOnline ON CliOnline.CodiceFiscale=AcqOnline.Cliente
+WHERE AcqOnline.Cliente IS NULL AND YEAR(DataProiez)= 2021 AND MONTH(DataProiez)= 02;
+
+SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
+FROM CliOnline
+WHERE CodiceFiscale NOT IN(SELECT Cliente FROM AcqOnline WHERE YEAR(DataProiez)= 2021 AND MONTH(DataProiez)= 02 GROUP BY Cliente);
+
+c
+
+YEAR(DataProiez)= <Anno> AND MONTH(DataProiez)= <Mese>
 
 /*Operazione 43: visualizzazione Sala con piu acquisti nell'ultimo anno*/
 SELECT COUNT(SceltaFisica.Posto) AS Acquisti, SceltaFisica.Sala 
@@ -243,12 +253,12 @@ GROUP BY SceltaOnline.Tariffa ORDER BY Acquisti DESC LIMIT 5;
 /*Per gli acquisti Online*/
 
 
-/*Operazione 45: visualizzazione Clienti Card Passione Cinema con piu acquisti per eta*/ 
-DA RIVEDERE***************
-SELECT TOP 10 COUNT(*) AS Acquisti, DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766 AS Eta
+/*Operazione 45: visualizzazione Clienti Card Passione Cinema con piu acquisti per eta*/
+SELECT COUNT(*) AS Acquisti, FORMAT(DATEDIFF(AcqFisico.DataProiez,CliCPC.DataNascita)/365,0) AS Eta
 FROM CliCPC,AcqFisico
 WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
-GROUP BY DATEDIFF(HOUR,CliCPC.DataNascita,AcqFisico.DataProiez)/8766;
+GROUP BY FORMAT(DATEDIFF(AcqFisico.DataProiez,CliCPC.DataNascita)/365,0)
+ORDER BY Acquisti DESC LIMIT 10;
 
 /*Operazione 46: visualizzazione numero Acquisti Fisici per orario*/
 SELECT COUNT(*) AS Acquisti, Orario.OraInizio AS Orario
@@ -267,7 +277,7 @@ GROUP By Orario.Numero;
 /*Operazione 48: visualizzazione incassi Bar mensili*/
 SELECT SUM(CostoTotale) AS IncassiBarMensili
 FROM AcqBar
-WHERE YEAR(Data)= <Anno> AND MONTH(DataProiez)= <Mese>;
+WHERE YEAR(Data)= <Anno> AND MONTH(Data)= <Mese>;
 
 /*Operazione 49: visualizzazione incassi Acquisti Fisici di un determinato Film*/
 SELECT SUM(CostoTotale) AS IncassiFilm

@@ -185,18 +185,20 @@ WHERE Codice=<codice> AND NOT EXISTS(SELECT * FROM Program WHERE Film=<codice>);
 
 /*Operazione 38: consultazione vendite fisiche Film in programmazione ultima settimana*/
 DA RIVEDERE*****
-SELECT COUNT(*) AS VentiteFisiche
+SELECT COUNT(*) AS VentiteFisiche, Film
 FROM AcqFisico
-WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>;
+WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>
+GROUP BY Film;
 
 /*Operazione 39: consultazione vendite online Film in programmazione ultima settimana*/
 DA RIVEDERE*****
-SELECT COUNT(*) AS VenditeOnline
+SELECT COUNT(*) AS VenditeOnline, Film
 FROM AcqOnline
-WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>;
+WHERE DataProiez> now()-INTERVAL 7 DAY AND Film=<Titolo>
+GROUP BY Film;
 
 /*Operazione 40: visualizzazione Prodotto Bar piu acquistato*/
-SELECT Prodotto.ID AS ID, Prodotto.Nome AS Nome, Count(*) AS Vendite
+SELECT Prodotto.ID AS ID, Prodotto.Nome AS Nome, COUNT(*) AS Vendite
 FROM Prodotto,Contenere
 WHERE Prodotto.ID=Contenere.Prodotto
 GROUP BY Prodotto.ID

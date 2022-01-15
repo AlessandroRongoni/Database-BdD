@@ -136,7 +136,7 @@ CREATE TABLE AcqOnline (
     DataProiez DATE NOT NULL,
 	CHECK(DataAcq<=DataProiez),
     Orario TIME REFERENCES Orario(Numero),
-    Cliente CHAR(16) REFERENCES CliOnline(CodiceFiscale)
+    Cliente CHAR(16) NOT NULL REFERENCES CliOnline(CodiceFiscale)
 );
 
 /*Creazione tabella Acquisto Biglietto Fisico*/

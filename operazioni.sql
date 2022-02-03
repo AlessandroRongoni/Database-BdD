@@ -208,7 +208,7 @@ FROM AcqFisico,CliCPC
 WHERE CliCPC.CodiceFiscale=AcqFisico.Cliente
 GROUP BY AcqFisico.Cliente ORDER BY Acquisti DESC Limit 10;
 
-/*Operazione 42: visualizzazione Clienti Online con nessun acquisto nell'ultimo mese*/
+/*Operazione 42: visualizzazione Clienti Online con nessun acquisto nell'ultimo mese*/ DA CANCELLAREEEEEEEEEEEEEEEEEE/RIVEDEREEEEEE
 DA RIVEDERE**************
 SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
 FROM CliOnline
@@ -221,9 +221,6 @@ WHERE AcqOnline.Cliente IS NULL AND YEAR(DataProiez)= 2021 AND MONTH(DataProiez)
 SELECT CliOnline.CodiceFiscale AS CodiceFiscale, CliOnline.Nome AS Nome, CliOnline.Cognome AS Cognome
 FROM CliOnline
 WHERE CodiceFiscale NOT IN(SELECT Cliente FROM AcqOnline WHERE YEAR(DataProiez)= 2021 AND MONTH(DataProiez)= 02 GROUP BY Cliente);
-
-c
-
 YEAR(DataProiez)= <Anno> AND MONTH(DataProiez)= <Mese>
 
 /*Operazione 43: visualizzazione Sala con piu acquisti nell'ultimo anno*/
